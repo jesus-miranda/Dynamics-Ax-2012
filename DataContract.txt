@@ -1,0 +1,87 @@
+/// <summary>
+/// Clase Contract del Data Provider
+/// </summary>
+/// <remarks>
+/// Clase Contract del Data Provider
+/// </remarks>
+[DataContractAttribute]
+final class mntExportReportContract implements SysOperationValidatable
+{
+    #mntGlobal_PE
+    FromDate                fechaDesde;
+    ToDate                  fechaHasta;
+    CompanyCoRegNum         nif_cif;
+    DirPartyName            nombre;
+    Name                    flag;
+}
+
+[DataMemberAttribute('fechaDesde')]
+public FromDate parm_fechaDesde(FromDate _fechaDesde = fechaDesde)
+{
+    fechaDesde = _fechaDesde;
+    return fechaDesde;
+}
+
+[DataMemberAttribute('fechaHasta')]
+public ToDate parm_fechaHasta(ToDate _fechaHasta = fechaHasta)
+{
+    fechaHasta = _fechaHasta;
+    return fechaHasta;
+}
+
+[DataMemberAttribute('flag')]
+public Name parm_flag(DirPartyName _flag = flag)
+{
+    flag = _flag;
+    return flag;
+}
+
+[DataMemberAttribute('nif_cif')]
+public CompanyCoRegNum parm_nif_cif(CompanyCoRegNum _nif_cif = nif_cif)
+{
+    nif_cif = _nif_cif;
+    nif_cif = CompanyInfo::find().CoRegNum;
+    return nif_cif;
+}
+
+[DataMemberAttribute('nombre')]
+public DirPartyName parm_nombre(DirPartyName _nombre = nombre)
+{
+    nombre = _nombre;
+    nombre = CompanyInfo::find().Name;
+    return nombre;
+}
+
+/// <summary>
+///    Validates the data contract values.
+/// </summary>
+/// <returns>
+///    true if all the contract values are valid; otherwise, false.
+/// </returns>
+public boolean validate()
+{
+    boolean isValid = true;
+
+    if (!fechaDesde)
+    {
+        isValid = checkFailed("@SYS97591");
+    }
+
+    if (!fechaHasta)
+    {
+        isValid = checkFailed("@SYS97592");
+    }
+
+
+    if (fechaDesde != dateNull() && fechaHasta != dateNull() && fechaDesde > fechaHasta)
+    {
+        isValid = checkFailed("@SYS104511");
+    }
+
+    if (!mntGenerateFile_PE::mntValidaFechas(fechaDesde, fechaHasta))
+    {
+        isValid = checkFailed("@GLS223474");
+    }
+
+    return isValid;
+}
