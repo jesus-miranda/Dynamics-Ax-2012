@@ -1,0 +1,131 @@
+/// <summary>
+/// Metodo Contract asignacion de campos Clase mntSaldoCtaXCobClientesContract_PE
+/// 3.3 LIBRO DE INVENTARIOS Y BALANCES - DETALLE DEL SALDO DE LA CUENTA 12 CUENTAS POR COBRAR COMERCIALES – TERCEROS Y 13
+/// </summary>
+/// <remarks>
+/// By JPazmino
+/// </remarks>
+class mntSaldoCtaXCobClientesContract_PE
+{
+    mntString08_PE                                  mntPeriodo;
+    mntString40_PE                                  mntCodigoOperacion;
+    mntNumeroCorrelativoAsientoContable_PE          mntNumeroCorrelativoAsientoContable;
+    mntCodTiposIdentificacion_PE                    mntTipoDocumentoIdentidad;
+    mntIdentificacion_PE                            mntNumeroDocumentoIdentidad;
+    mntRazonSocial_PE                               mntRazonSocial;
+    mntString10_PE                                  mntFechaEmision;
+    mntString24_PE                                  mntMontoCXC;
+    mntEstadoOperacion_PE                           mntEstadoOperacion;
+    CompanyCoRegNum                                 companyCoRegNum;
+    CompanyName                                     companyName;
+}
+
+protected void new()
+{
+}
+
+[DataMemberAttribute('companyCoRegNum')]
+public CompanyCoRegNum parm_companyCoRegNum(CompanyCoRegNum _companyCoRegNum = companyCoRegNum)
+{
+    companyCoRegNum = _companyCoRegNum;
+    return companyCoRegNum;
+}
+
+[DataMemberAttribute('companyName')]
+public CompanyName parm_companyName(CompanyName _companyName = companyName)
+{
+    companyName = _companyName;
+    return companyName;
+}
+
+[DataMemberAttribute('mntCodigoOperacion')]
+public mntString40_PE parm_mntCodigoOperacion(mntString40_PE _mntCodigoOperacion = mntCodigoOperacion)
+{
+    mntCodigoOperacion = _mntCodigoOperacion;
+    return mntCodigoOperacion;
+}
+
+[DataMemberAttribute('mntEstadoOperacion')]
+public mntEstadoOperacion_PE parm_mntEstadoOperacion(mntEstadoOperacion_PE _mntEstadoOperacion = mntEstadoOperacion)
+{
+    mntEstadoOperacion = _mntEstadoOperacion;
+    return mntEstadoOperacion;
+}
+
+[DataMemberAttribute('mntFechaEmision')]
+public mntString10_PE parm_mntFechaEmision(mntString10_PE _mntFechaEmision = mntFechaEmision)
+{
+    mntFechaEmision = _mntFechaEmision;
+    return mntFechaEmision;
+}
+
+[DataMemberAttribute('mntMontoCXC')]
+public mntString24_PE parm_mntMontoCXC(mntString24_PE _mntMontoCXC = mntMontoCXC)
+{
+    mntMontoCXC = _mntMontoCXC;
+    return mntMontoCXC;
+}
+
+[DataMemberAttribute('mntNumeroCorrelativoAsientoContable')]
+public mntNumeroCorrelativoAsientoContable_PE parm_mntNumeroCorrelativoAsientoContable(mntNumeroCorrelativoAsientoContable_PE _mntNumeroCorrelativoAsientoContable = mntNumeroCorrelativoAsientoContable)
+{
+    mntNumeroCorrelativoAsientoContable = _mntNumeroCorrelativoAsientoContable;
+    return mntNumeroCorrelativoAsientoContable;
+}
+
+[DataMemberAttribute('mntNumeroDocumentoIdentidad')]
+public mntIdentificacion_PE parm_mntNumeroDocumentoIdentidad(mntIdentificacion_PE _mntNumeroDocumentoIdentidad = mntNumeroDocumentoIdentidad)
+{
+    mntNumeroDocumentoIdentidad = _mntNumeroDocumentoIdentidad;
+    return mntNumeroDocumentoIdentidad;
+}
+
+[DataMemberAttribute('mntPeriodo')]
+public mntString08_PE parm_mntPeriodo(mntString08_PE _mntPeriodo = mntPeriodo)
+{
+    mntPeriodo = _mntPeriodo;
+    return mntPeriodo;
+}
+
+[DataMemberAttribute('mntRazonSocial')]
+public mntRazonSocial_PE parm_mntRazonSocial(mntRazonSocial_PE _mntRazonSocial = mntRazonSocial)
+{
+    mntRazonSocial = _mntRazonSocial;
+    return mntRazonSocial;
+}
+
+[DataMemberAttribute('mntTipoDocumentoIdentidad')]
+public mntCodTiposIdentificacion_PE parm_mntTipoDocumentoIdentidad(mntCodTiposIdentificacion_PE _mntTipoDocumentoIdentidad = mntTipoDocumentoIdentidad)
+{
+    mntTipoDocumentoIdentidad = _mntTipoDocumentoIdentidad;
+    return mntTipoDocumentoIdentidad;
+}
+
+/// <summary>
+/// Metodo que se utiliza para generar la clase contract en el orden especificado
+/// </summary>
+/// <returns>
+/// retorna datos de tipos string
+/// </returns>
+/// <remarks>
+/// NA
+/// </remarks>
+public str toString()
+{
+    return strFmt("@MLP811",
+                  this.parm_mntPeriodo(),
+                  this.parm_mntCodigoOperacion(),
+                  this.parm_mntNumeroCorrelativoAsientoContable(),
+                  this.parm_mntTipoDocumentoIdentidad(),
+                  this.parm_mntNumeroDocumentoIdentidad(),
+                  this.parm_mntRazonSocial(),
+                  this.parm_mntFechaEmision(),
+                  this.parm_mntMontoCXC(),
+                  this.parm_mntEstadoOperacion()
+                 );
+}
+
+public static mntSaldoCtaXCobClientesContract_PE construct()
+{
+    return new mntSaldoCtaXCobClientesContract_PE();
+}

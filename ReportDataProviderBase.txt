@@ -1,0 +1,105 @@
+/// <summary>
+/// Clase Data Provider
+/// </summary>
+/// <remarks>
+/// Clase Data Provider
+/// </remarks>
+//public class mntExportReportSaldoCtaXCobDP_PE extends SRSReportDataProviderBase SrsReportDataProviderPreProcess
+[SRSReportParameterAttribute(classStr(mntExportReportContract))]
+final class mntExportReportSaldoCtaXCobDP_PE extends SRSReportDataProviderBase
+{
+    mntSaldoCtasXCobrarTmp_PE                       tableTmp;
+}
+
+/// <summary>
+/// Retorna la tabla del reporte
+/// </summary>
+/// <returns>
+/// Retorna la tabla del reporte
+/// </returns>
+/// <remarks>
+/// By JPazmino
+/// </remarks>
+[SRSReportDataSetAttribute(tableStr(mntSaldoCtasXCobrarTmp_PE))]
+public mntSaldoCtasXCobrarTmp_PE getReporte()
+{
+    select * from tableTmp;
+    return tableTmp;
+}
+
+/// <summary>
+/// LLendado a la tabla Tmp del Reporte
+/// </summary>
+/// <param name="ListaInput">
+/// Lista de entrada
+/// </param>
+/// <remarks>
+/// LLendado a la tabla Tmp del Reporte
+/// </remarks>
+public void mntReporte(List ListaInput)
+{
+    mntSaldoCtaXCobClientesContract_PE              mntSaldoCtaXCobClientesContract;
+    List                                            resulSet;
+    ListEnumerator                                  lEnumerator;
+
+    resulSet = new List(Types::Class);
+    resulSet = ListaInput;
+    lEnumerator = resulSet.getEnumerator();
+
+    while(lEnumerator.moveNext())
+    {
+        ttsBegin;
+
+        mntSaldoCtaXCobClientesContract = lEnumerator.current();
+
+        tableTmp.initValue();
+
+        tableTmp.mntPeriodo_PE = mntSaldoCtaXCobClientesContract.parm_mntPeriodo();
+        tableTmp.mntCodigoOperacion_PE = mntSaldoCtaXCobClientesContract.parm_mntCodigoOperacion();
+        tableTmp.mntNumeroCorrelativoAsientoContable_PE = mntSaldoCtaXCobClientesContract.parm_mntNumeroCorrelativoAsientoContable();
+        tableTmp.mntTipoDocumentoIdentidad = mntSaldoCtaXCobClientesContract.parm_mntTipoDocumentoIdentidad();
+        tableTmp.mntNumeroDocumentoIdentidad = mntSaldoCtaXCobClientesContract.parm_mntNumeroDocumentoIdentidad();
+        tableTmp.mntNombresTrabajador_PE = mntSaldoCtaXCobClientesContract.parm_mntRazonSocial();
+        tableTmp.mntFechaEmision = mntSaldoCtaXCobClientesContract.parm_mntFechaEmision();
+        tableTmp.mntMontoCXC = str2num(mntSaldoCtaXCobClientesContract.parm_mntMontoCXC());
+        tableTmp.mntEstadoOperacion_PE = mntSaldoCtaXCobClientesContract.parm_mntEstadoOperacion();
+        tableTmp.mntCompanyCoRegNum = mntSaldoCtaXCobClientesContract.parm_companyCoRegNum();
+        tableTmp.mntCompanyName = mntSaldoCtaXCobClientesContract.parm_companyName();
+
+        tableTmp.Insert();
+
+        ttsCommit;
+    }
+}
+
+[SysEntryPointAttribute]
+public void processReport()
+{
+    #mntGlobal_PE
+    FromDate                            fechaDesde;
+    ToDate                              fechaHasta;
+    mntExportReportContract             contrato;
+    List                                listaObj = new List(Types::Class);
+    ;
+
+    contrato    = this.parmDataContract() as mntExportReportContract;
+    fechaDesde  = contrato.parm_fechaDesde();
+    fechaHasta  = contrato.parm_fechaHasta();
+
+    if(contrato.parm_flag() == #mntCodFormatoCtaxCobrarComerciales)
+        listaObj = mntLibrosGlobalServer_PE::mntSaldoCtaCobClientesList(#mntCodLibroInventarioBalance, #mntCodFormatoCtaxCobrarComerciales, fechaDesde, fechaHasta);
+    else if(contrato.parm_flag() == #mntCodFormatoCtaxCobrarPersonal)
+        listaObj = mntLibrosGlobalServer_PE::mntSaldoCtaCobClientesList(#mntCodLibroInventarioBalance, #mntCodFormatoCtaxCobrarPersonal, fechaDesde, fechaHasta);
+    else if(contrato.parm_flag() == #mntCodFormatoCtaxCobrarDiversas)
+        listaObj = mntLibrosGlobalServer_PE::mntSaldoCtaCobClientesList(#mntCodLibroInventarioBalance, #mntCodFormatoCtaxCobrarDiversas, fechaDesde, fechaHasta);
+
+    if(!listaObj.empty())
+    {
+        this.mntReporte(listaObj);
+    }
+    else
+    {
+        info("@MLP1489");
+    }
+    this.mntReporte(listaObj);
+}

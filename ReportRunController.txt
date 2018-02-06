@@ -1,0 +1,74 @@
+/// <summary>
+/// The <c>mntExportReportController</c> class is the controller class for the <c>mntExportReportController</c> report.
+/// </summary>
+/// <remarks>
+/// by JPazmino
+/// </remarks>
+final class mntExportReportController extends SrsReportRunController
+{
+
+}
+
+/// <summary>
+/// Metodo que captura los parametros del Caller
+/// </summary>
+/// <param name="_args">
+/// Argumentos => Codigo de Formatos
+/// </param>
+/// <remarks>
+/// By JPazmino
+/// </remarks>
+public void execute(Args _args)
+{
+    #mntGlobal_PE
+
+    LabelType       tituloReporte;
+
+    ;
+
+    if(_args.parm() == #mntCodFormatoCtaxCobrarComerciales)
+    {
+        tituloReporte = "@MLP1215";
+
+        this.parmReportName(ssrsReportStr(mntSaldosCtasXCobrarReport_PE, mntDetalleSaldoCtaClientes));
+        this.parmDialogCaption(tituloReporte);
+        //this.parmReportContract().parmReportCaption("@MLP1215");
+        //this.getReportContract().parmReportCaption("@MLP1215");
+    }
+    if(_args.parm() == #mntCodFormatoCtaxCobrarPersonal)
+    {
+        tituloReporte = "@MLP1214";
+
+        this.parmReportName(ssrsReportStr(mntSaldosCtasXCobrarReport_PE, mntDetalleSaldoCtaPersonal));
+        this.parmDialogCaption(tituloReporte);
+        //this.parmReportContract().parmReportCaption("@MLP1214");
+        //this.getReportContract().parmReportCaption("@MLP1214");
+    }
+    if(_args.parm() == #mntCodFormatoCtaxCobrarDiversas)
+    {
+        tituloReporte = "@MLP1213";
+
+        this.parmReportName(ssrsReportStr(mntSaldosCtasXCobrarReport_PE, mntDetalleSaldoCtaDiversas));
+        this.parmDialogCaption(tituloReporte);
+        //this.parmReportContract().parmReportCaption("@MLP1213");
+        //this.getReportContract().parmReportCaption("@MLP1213");
+    }
+
+    this.parmArgs(_args);
+    this.startOperation();
+
+}
+
+protected void preRunModifyContract()
+{
+    mntExportReportContract             contrato;
+    ;
+
+    contrato            = this.parmReportContract().parmRdpContract() as mntExportReportContract;
+    contrato.parm_flag(this.parmArgs().parm());
+}
+
+public static void main(Args _args)
+{
+    new mntExportReportController().execute(_args);
+}
