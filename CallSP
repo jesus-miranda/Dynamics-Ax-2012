@@ -1,0 +1,44 @@
+public static void mntSPArticulosPorLiberar(ItemId _ItemId, RecId _Origen) 
+{
+    #define.sp('mntSPArticulosPorLiberar')
+    #define.ITEMID('@ITEMID')
+    #define.USUARIO('@USUARIO')
+    #define.Origen('@Origen')
+    #define.ArriboPuerto('@ArriboPuerto')
+    #define.IngresoBodega('@IngresoBodega')
+    #define.Dias('@Dias')
+    System.Data.SqlClient.SqlConnection conn;
+    System.Data.SqlClient.SqlCommand cmd;
+    //System.Exception netExcepn;
+    System.Data.SqlClient.SqlParameterCollection parameterCollection;
+    PurchParameters PurchParameters;
+    mntHitosImportacion mntHitosImportacion;
+    str  sql;
+    //int64  resul;
+    select firstOnly mntArriboPuerto, mntDias from PurchParameters where PurchParameters.dataAreaId == curext();
+    select firstOnly Hito from mntHitosImportacion where mntHitosImportacion.Bodega == NoYes::Yes;
+    conn = MNTSQLCONNECTION::getConnection();
+
+
+    sql = strFmt(#sp);
+    cmd = new System.Data.SqlClient.SqlCommand();
+    cmd.set_Connection(conn);
+    cmd.set_CommandType(System.Data.CommandType::StoredProcedure);
+    cmd.set_CommandText(sql);
+    parameterCollection = cmd.get_Parameters();
+    parameterCollection.AddWithValue(#ITEMID, _ItemId);
+    parameterCollection.AddWithValue(#USUARIO, curUserId());
+    parameterCollection.AddWithValue(#Origen, _Origen);
+    parameterCollection.AddWithValue(#ArriboPuerto, PurchParameters.mntArriboPuerto);
+    parameterCollection.AddWithValue(#IngresoBodega, mntHitosImportacion.Hito);
+
+    parameterCollection.AddWithValue(#Dias, PurchParameters.mntDias);
+    conn.Open();
+    cmd.ExecuteNonQuery();
+    conn.Close();
+
+
+}
+
+
+
