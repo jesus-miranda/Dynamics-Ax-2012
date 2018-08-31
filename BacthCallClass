@@ -1,0 +1,26 @@
+/// <summary>
+/// Clase batch para INICIO DE CALCULO DE PRECIOS PARA ORIGEN DACIÓN
+/// </summary>
+/// <remarks>
+/// Clase batch para INICIO DE CALCULO DE PRECIOS PARA ORIGEN DACIÓN
+/// </remarks>
+public class mntBatchCalculoPrecioOrigenDacion extends RunBaseBatch
+{
+}
+
+public container pack()
+{
+    return conNull();
+}
+
+public void run()
+{
+    mntCalculoPrecioOrigenDacion clase = new mntCalculoPrecioOrigenDacion();
+
+    clase.calculoPrecio();
+}
+
+public boolean unpack(container packedClass)
+{
+    return true;
+}
