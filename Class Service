@@ -1,0 +1,80 @@
+/// <summary>
+/// clase de servicio para métodos de dacion y calificacion de productos
+/// </summary>
+/// <remarks>
+/// clase de servicio para métodos de dacion y calificacion de productos
+/// </remarks>
+public final class mntDacionCalificacionService
+{
+}
+
+/// <summary>
+///     Método que devuelve los motivos de cliente y contables
+/// </summary>
+/// <returns>
+///     Lista de tipo mntDacionFacturaServicioMotivosFinancier
+/// </returns>
+/// <remarks>
+///     Método que devuelve los motivos de cliente y contables
+/// </remarks>
+#localmacro.textoReturn
+'return'
+#endmacro
+[SysEntryPointAttribute(true),
+AifCollectionTypeAttribute(#textoReturn, Types::Class, classStr(mntDacionMotivosFinancieros))]
+public List getMotivosFinancieros()
+{
+    mntDacionMotivosFinancieros                     motivo;
+    List                                            respuesta;
+
+    ReasonTable                                     tablaMotivos;
+
+    ;
+
+    respuesta = new List(Types::Class);
+
+    while
+    select Reason, Description, Cust from tablaMotivos
+    where tablaMotivos.Cust == NoYes::Yes &&
+            tablaMotivos.Ledger == NoYes::Yes
+    {
+        motivo = new mntDacionMotivosFinancieros();
+
+        motivo.parmMotivo(tablaMotivos.Reason);
+        motivo.parmDescripcion(tablaMotivos.Description);
+
+        respuesta.addEnd(motivo);
+    }
+
+    return respuesta;
+}
+
+/// <summary>
+/// Método que actualiza el diario de inventario para calificación
+/// </summary>
+/// <param name="_contract">
+/// Diario de inventario
+/// </param>
+/// <returns>
+/// mntQrJournalTransferResponse
+/// </returns>
+/// <remarks>
+/// Método que actualiza el diario de inventario para calificación
+/// </remarks>
+#localmacro.textoReturn
+'return'
+#endmacro
+#localmacro.textoContract
+'_contract'
+#endmacro
+[SysEntryPointAttribute(true),
+AifCollectionTypeAttribute(#textoReturn, Types::Class, classStr(mntQrJournalTransferResponse)),
+AifCollectionTypeAttribute(#textoContract, Types::Class, classStr(mntQrInventJournalCalificacion))]
+public mntQrJournalTransferResponse updateInventJournalCalificacion(mntQrInventJournalCalificacion _contract)
+{
+    mntOrdenTransferencia clase = new mntOrdenTransferencia();
+
+    ;
+
+    return clase.updateInventJournalCalificacion(_contract);
+}
