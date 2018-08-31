@@ -1,0 +1,78 @@
+/// <summary>
+/// Clase modelo de respuesta para método de web service
+/// </summary>
+/// <remarks>
+/// Clase modelo de respuesta para método de web service
+/// </remarks>
+[DataContractAttribute]
+final class mntDacionMotivosFinancieros
+{
+    ReasonCode          motivo;
+    Description         descripcion;
+
+    #define.CurrentVersion(1)
+    #LocalMacro.CurrentList
+        motivo,
+        descripcion
+    #endMacro
+}
+
+public container pack()
+{
+    return [#CurrentVersion, #CurrentList];
+}
+
+[DataMemberAttribute('descripcion')]
+public Description parmDescripcion(Description _descripcion = descripcion)
+{
+    descripcion = _descripcion;
+    return descripcion;
+}
+
+[DataMemberAttribute('motivo')]
+public ReasonCode parmMotivo(ReasonCode _motivo = motivo)
+{
+    motivo = _motivo;
+    return motivo;
+}
+
+public boolean unpack(container _packedClass)
+{
+    int version = conPeek(_packedClass,1);
+
+    switch (version)
+    {
+        case #CurrentVersion:
+            [version,#CurrentList] = _packedClass;
+            break;
+        default:
+            return false;
+    }
+
+    return true;
+}
+
+public static mntDacionMotivosFinancieros construct()
+{
+    return new mntDacionMotivosFinancieros();
+}
+
+/// <summary>
+/// Crea una instancia de la clase  a partir de un contenedor
+/// que contiene información de la clase
+/// </summary>
+/// <param name="_packedClass">
+/// Contenedor de la clase
+/// </param>
+/// <returns>
+/// Clase instanciada con los valores recibidos
+/// </returns>
+/// <remarks>
+/// Utilizada cuando se emplea List::create
+/// </remarks>
+public static mntDacionMotivosFinancieros create(container _packedClass)
+{
+    mntDacionMotivosFinancieros clase = mntDacionMotivosFinancieros::construct();
+    clase.unpack(_packedClass);
+    return clase;
+}
